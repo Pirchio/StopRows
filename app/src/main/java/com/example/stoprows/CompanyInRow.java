@@ -38,22 +38,31 @@ public class CompanyInRow extends AppCompatActivity {
         mDatabase = FirebaseDatabase.getInstance().getReference();
         uid = mAuth.getCurrentUser().getUid();
         databaseReference = FirebaseDatabase.getInstance().getReference(uid);
+        ll();
+
+    }
+
+    public void ll(){
         databaseReference.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-                String value = dataSnapshot.getValue().toString();
+                String name = dataSnapshot.child("name").getValue().toString();
+                String mail = dataSnapshot.child("email").getValue().toString();
+                String value = "Name: " + name + " Mail: " + mail;
                 arrayList.add(value);
                 arrayAdapter.notifyDataSetChanged();
             }
 
             @Override
             public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-
+                arrayList.clear();
+                ll();
             }
 
             @Override
             public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
-
+                arrayList.clear();
+                ll();
             }
 
             @Override

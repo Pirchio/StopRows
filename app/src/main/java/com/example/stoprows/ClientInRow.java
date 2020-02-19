@@ -37,7 +37,7 @@ public class ClientInRow extends AppCompatActivity {
         leftRow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mDatabase.child("Users").child(uid).child("inrow").setValue(false);
+               //mal  mDatabase.child("Users").child(uid).child("inrow").setValue(false);
                 startActivity(new Intent(ClientInRow.this,Client.class));
             }
         });
