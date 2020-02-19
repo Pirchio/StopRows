@@ -1,5 +1,7 @@
 package com.example.stoprows;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -9,6 +11,9 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -17,7 +22,7 @@ import static android.widget.Toast.LENGTH_SHORT;
 public class ClientInRow extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private Button leftRow;
-    private DatabaseReference mDatabase;
+    private DatabaseReference mDatabase, reference;
     private String uid;
     private String fresult;
     @Override
@@ -36,6 +41,8 @@ public class ClientInRow extends AppCompatActivity {
                 startActivity(new Intent(ClientInRow.this,Client.class));
             }
         });
+
+
     }
 
     public void logout(View v){

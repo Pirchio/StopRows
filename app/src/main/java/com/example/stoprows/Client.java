@@ -131,8 +131,10 @@ public class Client extends AppCompatActivity {
                     });
 
                 }
-                else
+                else{
                     Toast.makeText(Client.this, "The store is closed", LENGTH_SHORT).show();
+                    fresult = null;
+                }
                 finish();
             }
 
