@@ -24,7 +24,7 @@ public class ClientInRow extends AppCompatActivity {
     private Button leftRow;
     private DatabaseReference mDatabase, reference;
     private String uid;
-    private String fresult;
+    private String sult;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,10 +34,14 @@ public class ClientInRow extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         mDatabase = FirebaseDatabase.getInstance().getReference();
         uid = mAuth.getCurrentUser().getUid();
+        Intent intent = getIntent();
+        sult = intent.getStringExtra("company");
+        Toast.makeText(ClientInRow.this, sult, LENGTH_SHORT).show();
         leftRow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               //mal  mDatabase.child("Users").child(uid).child("inrow").setValue(false);
+                mDatabase.child(sult).child(uid).setValue(null);
+                mDatabase.child("Users").child(uid).child("inrow").setValue(false);
                 startActivity(new Intent(ClientInRow.this,Client.class));
             }
         });

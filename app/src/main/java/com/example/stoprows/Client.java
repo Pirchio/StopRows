@@ -34,7 +34,7 @@ public class Client extends AppCompatActivity {
     private Button join,left;
     private IntentResult result;
     private boolean storestatus;
-    private String fresult, name, email;
+    private String fresult, name, email,uid;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +45,7 @@ public class Client extends AppCompatActivity {
         left = (Button) findViewById(R.id.leftRow2);
         mDatabase = FirebaseDatabase.getInstance().getReference();
         mAuth = FirebaseAuth.getInstance();
+        uid = mAuth.getCurrentUser().getUid();
 
         final Activity activity = this;
         join.setOnClickListener(new View.OnClickListener() {
@@ -62,7 +63,6 @@ public class Client extends AppCompatActivity {
     }
 
     private void getUserInfo(){
-        String uid = mAuth.getCurrentUser().getUid();
         mDatabase.child("Users").child(uid).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -106,37 +106,29 @@ public class Client extends AppCompatActivity {
         super.onStart();
         if (fresult!=null) {
             getStoreStatus();
+
         }
     }
 
     private void getStoreStatus(){
-        final String uid = mAuth.getCurrentUser().getUid();
         mDatabase.child("Users").child(fresult).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                storestatus = (boolean) dataSnapshot.child("its open?").getValue();
-                if (storestatus){
-                    Map<String,Object> map = new HashMap<>();
-                    map.put("name",name);
-                    map.put("email",email);
-                    mDatabase.child(fresult).child(uid).setValue(map);
-                    mDatabase.child("Users").child(uid).child("inrow").setValue(true);
-                    join.setEnabled(false);
-                    left.setEnabled(true);
-                    left.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            Toast.makeText(Client.this, "hola", LENGTH_SHORT).show();
-                        }
-                    });
+            storestatus = (boolean) dataSnapshot.child("its open?").getValue();
+            if (storestatus) {
+                Map<String,Object> row = new HashMap<>();
+                row.put("name",name);
+                row.put("email",email);
+                mDatabase.child(fresult).child(uid).setValue(row);
+                mDatabase.child("Users").child(uid).child("inrow").setValue(true);
 
-                }
-                else{
-                    Toast.makeText(Client.this, "The store is closed", LENGTH_SHORT).show();
-                    fresult = null;
-                }
-                finish();
-            }
+                Intent cir = new Intent(Client.this,ClientInRow.class);
+                cir.putExtra("company",fresult);
+                startActivity(cir);
+            } else {
+                Toast.makeText(Client.this, "Closed", LENGTH_SHORT).show();
+                result=null;fresult=null;
+            }}
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {

@@ -54,7 +54,6 @@ public class Register extends AppCompatActivity {
         register = (Button) findViewById(R.id.registerButton);
         company = (RadioButton) findViewById(R.id.companyRadioButton);
         user = (RadioButton) findViewById(R.id.userRadioButton);
-
         register.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

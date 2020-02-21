@@ -35,9 +35,9 @@ public class Intermediator extends AppCompatActivity {
                 usertype = (boolean) dataSnapshot.child("usertype").getValue();
                 inrow = (boolean) dataSnapshot.child("inrow").getValue();
                 if (usertype){
-                    if (inrow)
-                        startActivity(new Intent(Intermediator.this, ClientInRow.class));
-                    else
+                    //if (inrow)
+                     //   startActivity(new Intent(Intermediator.this, ClientInRow.class));
+                    //else
                         startActivity(new Intent(Intermediator.this,Client.class));
                 }
                 else{
