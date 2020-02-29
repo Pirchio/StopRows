@@ -44,7 +44,7 @@ public class Company extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                mDatabase.child("Users").child(uid).child("its open?").setValue(true);
-               mDatabase.child("Users").child(uid).child("inrow").setValue(true);
+               mDatabase.child("Users").child(uid).child("inrow").setValue(uid);
                 startActivity(new Intent(Company.this,CompanyInRow.class));
             }
         });

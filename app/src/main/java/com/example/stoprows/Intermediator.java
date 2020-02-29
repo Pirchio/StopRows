@@ -16,7 +16,8 @@ import com.google.firebase.database.ValueEventListener;
 public class Intermediator extends AppCompatActivity {
     private DatabaseReference mDatabase;
     private FirebaseAuth mAuth;
-    private boolean usertype,inrow;
+    private boolean usertype;
+    private String inrow;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,18 +34,18 @@ public class Intermediator extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 usertype = (boolean) dataSnapshot.child("usertype").getValue();
-                inrow = (boolean) dataSnapshot.child("inrow").getValue();
+                inrow = (String) dataSnapshot.child("inrow").getValue();
                 if (usertype){
-                    //if (inrow)
-                     //   startActivity(new Intent(Intermediator.this, ClientInRow.class));
-                    //else
-                        startActivity(new Intent(Intermediator.this,Client.class));
+                    if (inrow.equals("0"))
+                       startActivity(new Intent(Intermediator.this, Client.class));
+                    else
+                        startActivity(new Intent(Intermediator.this,ClientInRow.class));
                 }
                 else{
-                    if (inrow)
-                        startActivity(new Intent(Intermediator.this,CompanyInRow.class));
-                    else
+                    if (inrow.equals("0"))
                         startActivity(new Intent(Intermediator.this,Company.class));
+                    else
+                        startActivity(new Intent(Intermediator.this,CompanyInRow.class));
                 }
                 finish();
             }

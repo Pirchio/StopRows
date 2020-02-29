@@ -120,10 +120,9 @@ public class Client extends AppCompatActivity {
                 row.put("name",name);
                 row.put("email",email);
                 mDatabase.child(fresult).child(uid).setValue(row);
-                mDatabase.child("Users").child(uid).child("inrow").setValue(true);
+                mDatabase.child("Users").child(uid).child("inrow").setValue(fresult);
 
                 Intent cir = new Intent(Client.this,ClientInRow.class);
-                cir.putExtra("company",fresult);
                 startActivity(cir);
             } else {
                 Toast.makeText(Client.this, "Closed", LENGTH_SHORT).show();

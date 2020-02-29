@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -16,6 +17,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import static android.widget.Toast.LENGTH_SHORT;
 
@@ -34,14 +36,27 @@ public class ClientInRow extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         mDatabase = FirebaseDatabase.getInstance().getReference();
         uid = mAuth.getCurrentUser().getUid();
-        Intent intent = getIntent();
-        sult = intent.getStringExtra("company");
-        Toast.makeText(ClientInRow.this, sult, LENGTH_SHORT).show();
+        mDatabase.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                sult = dataSnapshot.child("Users").child(uid).child("inrow").getValue().toString();
+                if (sult.equals("0")) {
+
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
         leftRow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mDatabase.child(sult).child(uid).setValue(null);
-                mDatabase.child("Users").child(uid).child("inrow").setValue(false);
+                mDatabase.child(sult).child(uid).child("name").setValue(null);
+                mDatabase.child(sult).child(uid).child("email").setValue(null);
+                Toast.makeText(ClientInRow.this,uid, LENGTH_SHORT).show();
+                mDatabase.child("Users").child(uid).child("inrow").setValue("0");
                 startActivity(new Intent(ClientInRow.this,Client.class));
             }
         });

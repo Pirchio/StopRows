@@ -55,19 +55,17 @@ public class CompanyInRow extends AppCompatActivity {
 
             @Override
             public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-                arrayList.clear();
-                ll();
+                arrayAdapter.notifyDataSetChanged();
             }
 
             @Override
             public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
-                arrayList.clear();
-                ll();
+                arrayAdapter.notifyDataSetChanged();
             }
 
             @Override
             public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-
+                arrayAdapter.notifyDataSetChanged();
             }
 
             @Override
@@ -83,7 +81,7 @@ public class CompanyInRow extends AppCompatActivity {
     }
     public void StopRow(View view){
         mDatabase.child("Users").child(uid).child("its open?").setValue(false);
-        mDatabase.child("Users").child(uid).child("inrow").setValue(false);
+        mDatabase.child("Users").child(uid).child("inrow").setValue("0");
         mDatabase.child(uid).setValue(null);
         startActivity(new Intent(CompanyInRow.this,Company.class));
         finish();
