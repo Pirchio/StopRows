@@ -14,7 +14,7 @@
     <string name="already_account">Do you already have an account?</string>
     <string name="app_name">StopRows</string>
     <string name="Title_Register_txt">Sing up!</string>
-    <string name="Id_Register_txt">Id/Email</string>
+    <string name="Id_Register_txt">Name</string>
     <string name="Mail_Register_txt">Email</string>
     <string name="MailExample_Register_txt">example@example.com</string>
     <string name="Type_Register_txt">Type of account</string>

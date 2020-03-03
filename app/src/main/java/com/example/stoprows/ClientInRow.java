@@ -26,6 +26,7 @@ public class ClientInRow extends AppCompatActivity {
     private Button leftRow;
     private DatabaseReference mDatabase, reference;
     private String uid;
+    private String open;
     private String sult;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,12 +37,12 @@ public class ClientInRow extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         mDatabase = FirebaseDatabase.getInstance().getReference();
         uid = mAuth.getCurrentUser().getUid();
-        mDatabase.addValueEventListener(new ValueEventListener() {
+        mDatabase.child("Users").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                sult = dataSnapshot.child("Users").child(uid).child("inrow").getValue().toString();
+                sult = dataSnapshot.child(uid).child("inrow").getValue().toString();
                 if (sult.equals("0")) {
-
+                    exit();
                 }
             }
 
@@ -50,18 +51,23 @@ public class ClientInRow extends AppCompatActivity {
 
             }
         });
+
         leftRow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mDatabase.child(sult).child(uid).child("name").setValue(null);
-                mDatabase.child(sult).child(uid).child("email").setValue(null);
-                Toast.makeText(ClientInRow.this,uid, LENGTH_SHORT).show();
-                mDatabase.child("Users").child(uid).child("inrow").setValue("0");
-                startActivity(new Intent(ClientInRow.this,Client.class));
+                exit();
             }
         });
 
 
+    }
+    public void exit (){
+        mDatabase.child(sult).child(uid).child("name").setValue(null);
+        mDatabase.child(sult).child(uid).child("email").setValue(null);
+        mDatabase.child("Users").child(uid).child("inrow").setValue("0");
+        Intent i = new Intent(ClientInRow.this,Client.class);
+        i.putExtra("f", (String) null);
+        startActivity(i);
     }
 
     public void logout(View v){

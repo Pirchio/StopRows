@@ -26,7 +26,7 @@ public class CompanyInRow extends AppCompatActivity {
     ListView listView;
     ArrayList<String> arrayList = new ArrayList<>();
     ArrayAdapter<String> arrayAdapter;
-    private String uid;
+    private String uid,value,name,mail;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,26 +46,28 @@ public class CompanyInRow extends AppCompatActivity {
         databaseReference.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-                String name = dataSnapshot.child("name").getValue().toString();
-                String mail = dataSnapshot.child("email").getValue().toString();
-                String value = "Name: " + name + " Mail: " + mail;
+                name = dataSnapshot.child("name").getValue().toString();
+                mail = dataSnapshot.child("email").getValue().toString();
+                value = "Name: " + name + " Mail: " + mail;
                 arrayList.add(value);
                 arrayAdapter.notifyDataSetChanged();
             }
 
             @Override
             public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+                arrayList.clear();
                 arrayAdapter.notifyDataSetChanged();
+                name = null;
+                mail=null;
+                value = null;
             }
 
             @Override
             public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
-                arrayAdapter.notifyDataSetChanged();
             }
 
             @Override
             public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-                arrayAdapter.notifyDataSetChanged();
             }
 
             @Override

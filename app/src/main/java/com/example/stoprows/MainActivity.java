@@ -75,7 +75,6 @@
         public void Register(View view){
             Intent register = new Intent(this,Register.class);
             startActivity(register);
-            finish();
         }
 
        @Override

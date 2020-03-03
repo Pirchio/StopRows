@@ -26,14 +26,11 @@ import static android.widget.Toast.LENGTH_SHORT;
 public class Register extends AppCompatActivity {
 
     private EditText name, mail, pass, cpass;
-    private RadioButton company,user;
+    private RadioButton user;
     private Button register;
      //en string
-    private String sid = "";
-    private String smail = "";
-    private String spass = "";
-    private String scpass = "";
-    private boolean usertype,inrow = false;
+    private String sid = "",smail = "",spass = "",scpass = "",inrow = "0";
+    private boolean usertype;
     private boolean open = false;
     FirebaseAuth mAuth;
     DatabaseReference mDatabase;
@@ -52,7 +49,6 @@ public class Register extends AppCompatActivity {
         pass = (EditText) findViewById(R.id.passwordTextBox);
         cpass = (EditText) findViewById(R.id.cpasswordTextBox);
         register = (Button) findViewById(R.id.registerButton);
-        company = (RadioButton) findViewById(R.id.companyRadioButton);
         user = (RadioButton) findViewById(R.id.userRadioButton);
         register.setOnClickListener(new View.OnClickListener() {
             @Override

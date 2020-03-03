@@ -31,22 +31,23 @@ public class Client extends AppCompatActivity {
     private DatabaseReference mDatabase;
     private FirebaseAuth mAuth;
     private TextView greet;
-    private Button join,left;
+    private Button join;
     private IntentResult result;
     private boolean storestatus;
-    private String fresult, name, email,uid;
+    private String fresult, name, email,uid,f;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_client);
+        f = getIntent().getStringExtra("f");
+
         greet = (TextView) findViewById(R.id.greeting2);
         join = (Button) findViewById(R.id.registerButton);
-        left = (Button) findViewById(R.id.leftRow2);
         mDatabase = FirebaseDatabase.getInstance().getReference();
         mAuth = FirebaseAuth.getInstance();
         uid = mAuth.getCurrentUser().getUid();
-
+        fresult = f;
         final Activity activity = this;
         join.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -116,17 +117,23 @@ public class Client extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
             storestatus = (boolean) dataSnapshot.child("its open?").getValue();
             if (storestatus) {
-                Map<String,Object> row = new HashMap<>();
-                row.put("name",name);
-                row.put("email",email);
-                mDatabase.child(fresult).child(uid).setValue(row);
-                mDatabase.child("Users").child(uid).child("inrow").setValue(fresult);
+               if (fresult != null) {
+                   Map<String,Object> row = new HashMap<>();
+                   row.put("name",name);
+                   row.put("email",email);
+                   mDatabase.child(fresult).child(uid).setValue(row);
+                   mDatabase.child("Users").child(uid).child("inrow").setValue(fresult);
 
-                Intent cir = new Intent(Client.this,ClientInRow.class);
-                startActivity(cir);
+                   Intent cir = new Intent(Client.this,ClientInRow.class);
+                   startActivity(cir);
+               }
             } else {
                 Toast.makeText(Client.this, "Closed", LENGTH_SHORT).show();
-                result=null;fresult=null;
+                result=null;
+                fresult=null;
+                mDatabase.child("Users").child(uid).child("inrow").setValue("0");
+                startActivity(new Intent(Client.this,Intermediator.class));
+
             }}
 
             @Override

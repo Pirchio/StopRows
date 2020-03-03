@@ -4,23 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:screenOrientation="portrait"
     tools:context=".Client">
-
-    <Button
-        android:id="@+id/leftRow2"
-        android:layout_width="315dp"
-        android:layout_height="98dp"
-        android:layout_marginStart="48dp"
-        android:layout_marginLeft="48dp"
-        android:layout_marginTop="128dp"
-        android:background="@color/zxing_viewfinder_laser"
-        android:enabled="false"
-        android:text="@string/leftrow"
-        android:textColor="#FFFFFF"
-        android:textSize="24sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/clientlogout"
@@ -39,14 +23,13 @@
         android:id="@+id/registerButton"
         android:layout_width="315dp"
         android:layout_height="98dp"
-        android:layout_marginStart="48dp"
-        android:layout_marginLeft="48dp"
         android:layout_marginTop="128dp"
         android:background="#2196F3"
         android:enabled="true"
         android:text="@string/client"
         android:textColor="#FFFFFF"
         android:textSize="24sp"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
